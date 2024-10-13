@@ -1,0 +1,30 @@
+.titles {
+    margin-left: 15px;
+    margin-top:25px;
+}
+
+.grey-bg {
+    background-color: rgba(217, 217, 217, 0.6);
+}
+
+.whole-block {
+    height: 100vh;
+    width: 100vw;
+}
+
+.lines {
+    border-radius: 5px;
+    border: 3px solid black ;
+}
+
+.space-mx-60 {
+    height: 7vh;
+}
+
+.checkout-form {
+    display: flex;
+    justify-content: center;
+}
+
+
+

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>YYWS.AI</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles-contact.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="scripts.js"></script>
+</head>
+<body data-spy="scroll" data-target="#navbar0" data-offser="0">
+    <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary pad-side" id="navbar0" th:object="${user}">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="logo" href="/">
+            <img src="/image/logo.png" width="25" height="25" alt="">
+            YYWS
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link main-color-text" id="catalogue" href="/catalogue">Catalogue</a>
+                </li>
+                <li class="nav-item" th:if="${user == null || user != null && user.class.name == 'com.yysw.user.customer.Customer'}">
+                    <a class="nav-link main-color-text" id="contact" href="/contactUs">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+        <span th:if="${user eq null}">
+                <button class="white-button-sm" type="button" onclick="window.location.href='/login'">Log In</button>
+            </span>
+        <div th:unless="${user eq null}">
+                <span th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
+                    <a th:href="@{/order-history}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
+                    <a th:href="@{/shopping-cart}"><img src="/image/shopping-cart.png " width="30" height="30" alt=""></a>
+                    <div class="dropstart" style="display: inline-block">
+                        <a
+                                role="button"
+                                id="dropDownMenuLink1"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            <img src="/image/acc-icon.png" width="30" height="30" alt="">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropDownMenuLink1">
+                            <li><a class="dropdown-item" th:href="@{/quitLogin}">Log out</a></li>
+                        </ul>
+                    </div>
+                </span>
+            <span th:if="${user.class.name eq 'com.yysw.user.owner.Owner'}">
+                    <a th:href="@{/order-history}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
+                    <div class="dropstart" style="display: inline-block">
+                        <a
+                                role="button"
+                                id="dropDownMenuLink2"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            <img src="/image/acc-icon.png" width="30" height="30" alt="">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropDownMenuLink2">
+                            <li><a class="dropdown-item" th:href="@{/quitLogin}">Log out</a></li>
+                        </ul>
+                    </div>
+                </span>
+        </div>
+    </nav>
+    <div class="container-fluid container-center g-0">
+        <div class="center-child pad-64">
+            <h1>Have questions?</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="content bg-green">
+                        <p class="p-space">
+                            Email: contact@yyws.ai<br>
+                            Phone: 0818 265 265
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 grey-bg">
+                    <div class="content bg-pink" style="align-content: center">
+                        <h4 style="text-align: center">Schedule A Call with Our Team</h4>
+                        <ul>
+                            <li>15 mins call</li>
+                            <li>Meeting details provided upon confirmation</li>
+                        </ul>
+                        <form action="#" th:action="@{/contactUs}" th:object="${contactInformation}" method="POST">
+                            <div class="row pinkBox">
+                                <input type="text" th:field="*{contactName}" placeholder="Name" required/>
+                                <span th:if="${#fields.hasErrors('contactName')}" th:errors="*{contactName}">Valid Name Required</span>
+                            </div>
+                            <div class="space-mx-40"></div>
+                            <div class="row pinkBox">
+                                <input type="datetime-local" th:field="*{contactDate}" id="contactDate" required/>
+                                <span th:if="${#fields.hasErrors('contactDate')}" th:errors="*{contactDate}">Valid Date Required</span>
+                            </div>
+                            <input class="orange-button-md" type="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

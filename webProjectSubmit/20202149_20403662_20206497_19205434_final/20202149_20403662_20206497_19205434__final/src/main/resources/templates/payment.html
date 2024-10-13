@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>YYSW.AI</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-payment.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+        <div class="container-fluid row payment-container g-0">
+            <div class="col-sm-8 pad-64">
+                <h1 style="padding-left: 24px">Enter Payment Details</h1>
+                <div class="space-mx-40"></div>
+                <hr class="solid">
+                <div class="pad-payment" style="width: 40vw">
+                    <form action="#" th:action="@{/payment}" th:object="${paymentInformation}" method="POST">
+                        <div class="row">
+                            <input type="text" th:field="*{name}" placeholder="Name On Card*" required/>
+                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Valid Name Required</span>
+                        </div>
+                        <div class="space-mx-40"></div>
+                        <div class="row">
+                            <input type="text" th:field="*{cardNum}" placeholder="Card Number*" pattern="\d{16}" required/>
+                            <span th:if="${#fields.hasErrors('cardNum')}" th:errors="*{cardNum}">Valid Card Number Required</span>
+                        </div>
+                        <div class="space-mx-40"></div>
+                        <div class="row">
+                            <div class="col-sm-6 g-0">
+                                <input type="month" th:field="*{expiry}" placeholder="MM/YY" required/><br>
+                                <span th:if="${#fields.hasErrors('expiry')}" th:errors="*{expiry}">Valid Date Required</span>
+                            </div>
+                            <div class="col-sm-6 g-0" style="text-align: end">
+                                <input type="text" class="cvv" th:field="*{cvv}" placeholder="CVV*" pattern="\d{3}" required/><br>
+                                <span th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}">Valid CVV Required</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center">
+                            <div class="space-mx-60"></div>
+                            <input class="orange-button-md" type="submit" value="Submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-4 grey-bg pad-64">
+                <h1>Order Summary</h1>
+                <div class="space-mx-40"></div>
+                <hr class="solid">
+                <div class="space-mx-40"></div>
+                <span class="leftright">
+                    <span style="font-weight: bold">TOTAL</span>
+                    <span th:text="${currentOrderPrice}"></span>
+                </span>
+            </div>
+        </div>
+</body>
+</html>

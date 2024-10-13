@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>YYSW.AI</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles-order-hist.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body data-spy="scroll" data-target="#navbar0" data-offser="0">
+    <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary pad-side" id="navbar0" th:object="${user}">
+        <button
+
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="logo" href="/">
+            <img src="/image/logo.png" width="25" height="25" alt="">
+            YYWS
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link main-color-text" id="catalogue" href="/catalogue">Catalogue</a>
+                </li>
+                <li class="nav-item" th:if="${user ne null && user.class.name eq 'com.yysw.user.customer.Customer'}">
+                    <a class="nav-link main-color-text" id="contact" href="/contactUs">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+        <span th:if="${user.class.name eq 'com.yysw.user.customer.Customer'}">
+            <a th:href="@{/order-history}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
+            <a th:href="@{/shopping-cart}"><img src="/image/shopping-cart.png " width="30" height="30" alt=""></a>
+            <div class="dropstart" style="display: inline-block">
+                <a
+                        role="button"
+                        id="dropDownMenuLink1"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                >
+                    <img src="/image/acc-icon.png" width="30" height="30" alt="">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropDownMenuLink1">
+                    <li><a class="dropdown-item" th:href="@{/quitLogin}">Log out</a></li>
+                </ul>
+            </div>
+        </span>
+        <span th:if="${user.class.name eq 'com.yysw.user.owner.Owner'}">
+            <a th:href="@{/order-history}"><img src="/image/order-history.png " width="30" height="30" alt=""></a>
+            <div class="dropstart" style="display: inline-block">
+                <a
+                        role="button"
+                        id="dropDownMenuLink2"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                >
+                    <img src="/image/acc-icon.png" width="30" height="30" alt="">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropDownMenuLink2">
+                    <li><a class="dropdown-item" th:href="@{/quitLogin}">Log out</a></li>
+                </ul>
+            </div>
+        </span>
+        </div>
+    </nav>
+    <div class="container-fluid container-pad">
+        <h1>Order History</h1>
+        <hr>
+        <div class="container container-hist">
+            <div th:each="order: ${orders}" class="row justify-content-md-center">
+                <hr>
+                <div class="orderBack">
+                    <div class="row">
+                        <span class="leftright">
+                            <h3 th:text="'Order #' + ${order.id}"></h3>
+                            <p th:text="${#dates.format(order.orderDate, 'dd/MM/yyyy')}"></p>
+                        </span>
+                    </div>
+                    <div class="row">
+                        <span class="left">
+                            <h3 th:text="'Payment #' + ${order.paymentId}"></h3>
+                        </span>
+                    </div>
+                    <div class="row divpadding">
+                        <span class="leftright">
+                            <span th:text="'Quantity:' + ' ' + ${order.quantityOfOrder()}"></span>
+                            <span th:text="'State:' + ' ' + ${order.state}"></span>
+                        </span>
+                    </div>
+                    <div class="row divpadding">
+                        <span class="leftright">
+                            <span th:text="'Total:' + ' ' + ${order.totalPriceOfOrderedModels()}"></span>
+                            <a th:href="@{/view-order/{id}(id=${order.getId()})}">details >>></a>
+                        </span>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

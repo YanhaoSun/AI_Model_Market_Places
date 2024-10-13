@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      yysw-db:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+    restart: always
+  yysw-db:
+    container_name: yysw-db
+    image: mysql:latest
+    restart: 'no'
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_DATABASE=yysw-db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=root
+    healthcheck:
+      test: [ "CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD' ]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - ./sql-scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./sql-scripts/data.sql:/docker-entrypoint-initdb.d/2.sql
+      - sqldata:/var/lib/mysql
+volumes:
+  sqldata:

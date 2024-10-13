@@ -1,0 +1,35 @@
+.row-padding {
+    padding: 0 8px;
+}
+
+.vert-padding-32 {
+    padding-top: 32px !important;
+    padding-bottom: 32px !important;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 980px;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: solid 2px #f19393;
+    text-align: left;
+    padding: 10px;
+}
+
+p {
+    text-align: justify;
+}

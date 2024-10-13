@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>YYWS.AI</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-login.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="scripts.js"></script>
+</head>
+<body data-spy="scroll" data-target="#navbar0" data-offser="0">
+    <div class="container-fluid center-container">
+        <div class="logo-holder">
+            <h2><a th:href="@{/}">
+                <img src="/image/logo.png" width="25" height="25" alt="">
+                YYWS
+            </a></h2>
+        </div>
+        <div class="center-child">
+            <h3>REGISTER</h3>
+            <div class="space-mx-60"></div>
+            <form name="register" th:action="@{/register}" onsubmit="return validateRegister()" method="post">
+                <input type="text" id="username" th:name="username" placeholder="Username" required/>
+                <div class="space-mx-60"></div>
+                <input type="password" id="passwd" th:name="passwd" placeholder="Password" required/>
+                <div class="space-mx-60"></div>
+                <input type="password" id="cpasswd" placeholder="Confirm Password" required/>
+                <div class="space-mx-60"></div>
+                <div style="text-align: center">
+                    <label for="adminCheck">Register as an administrator</label>
+                    <input type="checkbox" id="adminCheck" onclick="showAdminKeyInput()">
+                    <input class="adminkey" style="display: none" type="password" id="adminKeyInput" th:name="adminKey">
+                    <div class="space-mx-60"></div>
+                    <input class="orange-button-md" type="submit" value="REGISTER">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
